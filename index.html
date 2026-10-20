@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Rep Sport</title>
+</head>
+<body>
+    <h1>Répétitions aléatoires</h1>
+
+    <div id="choix">
+        <button onclick="choixNombre()">Nombre</button>
+        <button onclick="choixTemps()">Temps</button>
+    </div>
+
+    <div id="nombre">
+        <div class="cadre">
+            <img id="img_nombre" alt="">
+        </div>
+
+        <div id="jeu_nombre" style="visibility: hidden;">
+            <button onclick="suivantNombre()" id="btn_nombre">SUIVANT</button>
+        </div>
+
+        <div id="config_nombre">
+            <label>Max : <input type="number" id="max_nombre" value="20" min="1" max="20"></label>
+            <button onclick="demarrerNombre()">DÉMARRER</button>
+            <button class="retour" onclick="retour()">RETOUR</button>
+        </div>
+    </div>
+
+    <div id="temps">
+        <div class="cadre">
+            <p id="affichage_timer"></p>
+            <img id="img_temps" alt="" style="visibility: hidden;">
+        </div>
+
+        <div id="jeu_temps" style="visibility: hidden;">
+            <button onclick="suivantTemps()" id="btn_temps">SUIVANT</button>
+        </div>
+
+        <div id="config_temps">
+            <label>Min (sec) : <input type="number" id="min_temps" value="1" min="1"></label>
+            <label>Max (sec) : <input type="number" id="max_temps" min="1" placeholder="infini"></label>
+            <button onclick="demarrerTemps()">DÉMARRER</button>
+            <button class="retour" onclick="retour()">RETOUR</button>
+        </div>
+    </div>
+</body>
+</html>

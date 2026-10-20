@@ -1,0 +1,116 @@
+:root {
+    /* taille du cadre (images / timer) : 360px max, 85 % de la largeur sur téléphone */
+    --taille-cadre: min(85vw, 360px);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* ---------- Page ---------- */
+body {
+    margin: 0;
+    padding: 16px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
+h1 {
+    margin: 0 0 24px;
+    font-family: 'Lilita One', cursive;
+    font-weight: 400;
+    font-size: clamp(4rem, 7vw, 2.8rem);
+}
+
+#choix, #nombre, #temps {
+    width: 100%;
+    max-width: 480px;
+}
+
+#nombre, #temps {
+    display: none;
+}
+
+/* ---------- Boutons / labels / champs ---------- */
+button, label, input {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.8rem;
+}
+
+button {
+    min-height: 44px;
+    margin: 6px;
+    padding: 10px 22px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    background: #fff;
+    color: #000;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+button.retour {
+    background: transparent;
+    color: #fff;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+}
+
+input {
+    width: 90px;
+    min-height: 44px;
+    margin-left: 8px;
+    padding: 8px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    background: #111;
+    color: #fff;
+    text-align: center;
+    font-size: 16px; /* évite le zoom automatique sur iPhone */
+}
+
+/* ---------- Cadre central (image ou timer) ---------- */
+.cadre {
+    position: relative;
+    width: var(--taille-cadre);
+    height: var(--taille-cadre);
+    margin: 0 auto 16px;
+    border: 3px solid #fff;
+    border-radius: 70px;
+    overflow: hidden;
+    background:white;
+}
+
+.cadre img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#affichage_timer {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lilita One', cursive;
+    color:black;
+    font-size: 8rem;
+}
