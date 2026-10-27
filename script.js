@@ -1,7 +1,7 @@
 // ---------- Réglages ----------
 const NOMBRE_MIN_AUTORISE = 1;
-const NOMBRE_MAX_AUTORISE = 20;
-const CHANCE_IMAGE_RARE = 0.05;   // 5 % de chances pour chacune des deux images rares (-1.png et 0.png)
+const NOMBRE_MAX_AUTORISE = 10;
+const CHANCE_CARTE_RARE = 0.05;   // 5 % de chances pour chacune des deux cartes rares ("Changement de sens" et "Passe ton tour")
 const MARGE_SANS_MAX = 60;        // si "max" est vide (infini) : max = min + 60
 
 // ---------- Variables ----------
@@ -19,12 +19,19 @@ function entierAleatoire(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// renvoie -1 (5 %), 0 (5 %) ou null (90 %) : même probabilité pour nombre et temps
-function tirerImageRare() {
+// renvoie -1 (5 %), -2 (5 %) ou null (90 %) : même probabilité pour nombre et temps
+function tirerCarteRare() {
     const r = Math.random();
-    if (r < CHANCE_IMAGE_RARE) return -1;
-    if (r < 2 * CHANCE_IMAGE_RARE) return 0;
+    if (r < CHANCE_CARTE_RARE) return -1;
+    if (r < 2 * CHANCE_CARTE_RARE) return -2;
     return null;
+}
+
+// transforme une valeur en texte à afficher
+function texteDe(valeur) {
+    if (valeur === -1) return "Changement de sens";
+    if (valeur === -2) return "Passe ton tour";
+    return String(valeur);
 }
 
 // ---------- Choix du mode ----------
@@ -53,8 +60,7 @@ function retour() {
     clearInterval(intervalleTimer);
     document.querySelector('#jeu_nombre').style.visibility = "hidden";
     document.querySelector('#jeu_temps').style.visibility = "hidden";
-    document.querySelector('#img_nombre').removeAttribute('src');
-    document.querySelector('#img_temps').style.visibility = "hidden";
+    document.querySelector('#affichage_nombre').textContent = "";
     document.querySelector('#affichage_timer').textContent = "";
 
     div_choix.style.display = "block";
@@ -78,16 +84,16 @@ function demarrerNombre(){
 }
 
 function suivantNombre(){
-    let image;
+    let valeur;
 
-    // on tire jusqu'à obtenir une image différente de la précédente
+    // on tire jusqu'à obtenir une valeur différente de la précédente
     do {
-        const rare = tirerImageRare();
-        image = (rare !== null) ? rare : entierAleatoire(NOMBRE_MIN_AUTORISE, maxNombre);
-    } while (image === dernierNombre);
+        const rare = tirerCarteRare();
+        valeur = (rare !== null) ? rare : entierAleatoire(NOMBRE_MIN_AUTORISE, maxNombre);
+    } while (valeur === dernierNombre);
 
-    dernierNombre = image;
-    document.querySelector('#img_nombre').src = "img/" + image + ".png";
+    dernierNombre = valeur;
+    document.querySelector('#affichage_nombre').textContent = texteDe(valeur);
 }
 
 // ---------- Partie TEMPS ----------
@@ -110,23 +116,18 @@ function demarrerTemps(){
 
 function suivantTemps(){
     const affichage = document.querySelector('#affichage_timer');
-    const img = document.querySelector('#img_temps');
 
     // on arrête le timer précédent
     clearInterval(intervalleTimer);
 
-    // rarement : une image (-1.png ou 0.png) à la place du timer
-    const rare = tirerImageRare();
+    // rarement : un texte ("Changement de sens" ou "Passe ton tour") à la place du timer
+    const rare = tirerCarteRare();
     if (rare !== null) {
-        img.src = "img/" + rare + ".png";
-        img.style.visibility = "visible";
-        affichage.textContent = "";
+        affichage.textContent = texteDe(rare);
         return;
     }
 
     // sinon : un timer aléatoire différent du précédent (possible seulement si min < max)
-    img.style.visibility = "hidden";
-
     let secondes = entierAleatoire(minTemps, maxTemps);
     if (maxTemps > minTemps) {
         while (secondes === dernierTemps) {
