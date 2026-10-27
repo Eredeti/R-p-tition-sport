@@ -34,6 +34,12 @@ function texteDe(valeur) {
     return String(valeur);
 }
 
+// écrit le texte dans l'élément et réduit la police si le texte est long
+function afficherTexte(element, texte) {
+    element.textContent = texte;
+    element.classList.toggle('texte-long', texte.length > 5);
+}
+
 // ---------- Choix du mode ----------
 function choixNombre(){
     const div_choix = document.querySelector('#choix');
@@ -93,7 +99,7 @@ function suivantNombre(){
     } while (valeur === dernierNombre);
 
     dernierNombre = valeur;
-    document.querySelector('#affichage_nombre').textContent = texteDe(valeur);
+    afficherTexte(document.querySelector('#affichage_nombre'), texteDe(valeur));
 }
 
 // ---------- Partie TEMPS ----------
@@ -123,7 +129,7 @@ function suivantTemps(){
     // rarement : un texte ("Changement de sens" ou "Passe ton tour") à la place du timer
     const rare = tirerCarteRare();
     if (rare !== null) {
-        affichage.textContent = texteDe(rare);
+        afficherTexte(affichage, texteDe(rare));
         return;
     }
 
@@ -137,11 +143,11 @@ function suivantTemps(){
     dernierTemps = secondes;
 
     let restant = secondes;
-    affichage.textContent = restant + " s";
+    afficherTexte(affichage, restant + " s");
 
     intervalleTimer = setInterval(function () {
         restant--;
-        affichage.textContent = restant + " s";
+        afficherTexte(affichage, restant + " s");
         if (restant <= 0) {
             clearInterval(intervalleTimer);
         }
