@@ -1,5 +1,5 @@
 :root {
-    /* taille du cadre (images / timer) : 360px max, 85 % de la largeur sur téléphone */
+    /* taille du cadre : 360px max, 85 % de la largeur sur téléphone */
     --taille-cadre: min(85vw, 360px);
 }
 
@@ -84,7 +84,7 @@ input {
     font-size: 16px; /* évite le zoom automatique sur iPhone */
 }
 
-/* ---------- Cadre central (image ou timer) ---------- */
+/* ---------- Cadre central (nombre ou timer) ---------- */
 .cadre {
     position: relative;
     width: var(--taille-cadre);
@@ -93,24 +93,27 @@ input {
     border: 3px solid #fff;
     border-radius: 70px;
     overflow: hidden;
-    background:white;
+    background: white;
 }
 
-.cadre img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
+#affichage_nombre,
 #affichage_timer {
     margin: 0;
+    width: 100%;
     height: 100%;
+    padding: 30px;                 /* garde le texte loin des coins arrondis */
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Lilita One', cursive;
-    color:black;
+    color: black;
     font-size: 8rem;
+    line-height: 1.1;
+    overflow-wrap: break-word;
+}
+
+/* textes longs ("Changement de sens", "Passe ton tour") : plus petits pour tenir dans le cadre */
+#affichage_nombre.texte-long,
+#affichage_timer.texte-long {
+    font-size: clamp(2rem, 11vw, 3.4rem);
 }
